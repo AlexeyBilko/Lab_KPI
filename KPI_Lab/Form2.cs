@@ -15,6 +15,7 @@ namespace KPI_Lab
         public List<Book> books;
         public List<Reader> readers;
         public List<Librarian> librarians;
+        public List<Admin> admins;
 
         public Form2()
         {
@@ -24,7 +25,22 @@ namespace KPI_Lab
         public Form2(List<Book> b, List<Reader> r, List<Librarian> l)
         {
             books = b;
+            readers = r;
+            librarians = l;
+            InitializeComponent();
 
+
+            foreach (var item in books)
+            {
+                listBox1.Items.Add(item.GetString());
+            }
+        }
+        public Form2(List<Book> b, List<Reader> r, List<Librarian> l, List<Admin> a)
+        {
+            books = b;
+            readers = r;
+            librarians = l;
+            admins = a;
             InitializeComponent();
 
 

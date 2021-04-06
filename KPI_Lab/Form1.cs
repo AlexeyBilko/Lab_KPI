@@ -16,7 +16,7 @@ namespace KPI_Lab
         public List<Book> books;
         public List<Reader> readers;
         public List<Librarian> librarians;
-
+        public List<Admin> admins;
 
 
 
@@ -27,10 +27,12 @@ namespace KPI_Lab
             books = new List<Book>();
             readers = new List<Reader>();
             librarians = new List<Librarian>();
+            admins = new List<Admin>();
 
             GetBooks();
             GetReaders();
             GetLibrarians();
+            GetAdmins();
 
             comboBox1.Items.Add("admin");
             comboBox1.Items.Add("reader");
@@ -77,6 +79,19 @@ namespace KPI_Lab
             }
         }
 
+        public void GetAdmins()
+        {
+            List<string> tmp = File.ReadAllLines("admins.txt").ToList();
+
+            admins.Clear();
+
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                string[] buf = tmp[i].Split(' ');
+                admins.Add(new Admin(readers, books, librarians, admins, buf[0], buf[1], buf[2], buf[3], buf[4]));
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedItem.ToString() == "reader")
@@ -85,19 +100,30 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        Form2 newForm = new Form2(books,readers,librarians);
+                        Form2 newForm = new Form2(books, readers, librarians);
                         newForm.Show();
 
                     }
                 }
             }
-            else if(comboBox1.SelectedItem.ToString() == "librarian")
+            else if (comboBox1.SelectedItem.ToString() == "librarian")
             {
                 foreach (var item in librarians)
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
                         Form2 newForm = new Form2(books, readers, librarians);
+                        newForm.Show();
+                    }
+                }
+            }
+            else if (comboBox1.SelectedItem.ToString() == "admin")
+            {
+                foreach (var item in admins)
+                {
+                    if (login.Text == item.Login && password.Text == item.Password)
+                    {
+                        Form2 newForm = new Form2(books, readers, librarians, admins);
                         newForm.Show();
                     }
                 }

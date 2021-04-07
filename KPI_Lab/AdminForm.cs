@@ -40,11 +40,19 @@ namespace KPI_Lab
         {
             SelectedReader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
 
+            listBox2.Items.Clear();
+
+            foreach (var item in SelectedReader.books)
+            {
+                listBox2.Items.Add(item.Title);
+            }
+
             textBox2.Text = SelectedReader.Name;
             textBox3.Text = SelectedReader.Surname;
             textBox4.Text = SelectedReader.DateOfBirth;
             textBox5.Text = SelectedReader.Login;
-            textBox6.Text = "********";
+            textBox6.Text = SelectedReader.fine.ToString();
+            textBox7.Text = "********";
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -54,20 +62,23 @@ namespace KPI_Lab
             textBox4.Text = "";
             textBox5.Text = "";
             textBox6.Text = "";
+            textBox7.Text = "";
+            textBox6.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                Reader reader = new Reader(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox6.Text);
+                Reader reader = new Reader(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox7.Text);
+                textBox6.Enabled = true;
 
                 textBox2.Text = "";
                 textBox3.Text = "";
                 textBox4.Text = "";
                 textBox5.Text = "";
-
                 textBox6.Text = "";
+                textBox7.Text = "";
 
                 listBox1.Items.Add(reader.Name + " " + reader.Surname);
 
@@ -102,7 +113,34 @@ namespace KPI_Lab
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Book book = admin.books.Find(x => x.Title == textBox1.Text);
+                Reader reader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
+                if (reader.books.Find(x => x == book) != null)
+                {
+                    MessageBox.Show("This book is already here", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    reader.books.Add(book);
+                    admin.SaveReadersChangesInFile("readers.txt");
 
+                    listBox2.Items.Clear();
+
+                    foreach (var item in reader.books)
+                    {
+                        listBox2.Items.Add(item.Title);
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -124,21 +162,6 @@ namespace KPI_Lab
             {
                 MessageBox.Show("Error!");
             }
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label3_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

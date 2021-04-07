@@ -137,8 +137,8 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        //LibrarianForm newForm = new LibrarianForm(books, readers, librarians, admins);
-                        //newForm.Show();
+                        AdminForm newForm = new AdminForm(item);
+                        newForm.Show();
                     }
                 }
             }

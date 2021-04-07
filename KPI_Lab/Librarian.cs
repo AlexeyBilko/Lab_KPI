@@ -9,8 +9,8 @@ namespace KPI_Lab
 {
     public class Librarian : User
     {
-        List<Reader> readers;
-        List<Book> books;
+        public List<Reader> readers;
+        public List<Book> books;
 
         public Librarian(List<Reader> readers, List<Book> books, string name, string surname, string dateOfBirth, string login, string password) : base(name, surname, dateOfBirth, login, password)
         {
@@ -68,7 +68,22 @@ namespace KPI_Lab
             {
                 string[] buf = tmp[i].Split(' ');
                 readers.Add(new Reader(buf[0], buf[1], buf[2], buf[3], buf[4]));
+                List<int> id = new List<int>();
+
                 readers[i].fine = Convert.ToInt32(buf[5]);
+
+                if (buf[6] != null)
+                {
+                    for (int j = 7; j < Convert.ToInt32(buf[6]) + 7; j++)
+                    {
+                        id.Add(Convert.ToInt32(buf[j]));
+                    }
+
+                    for (int d = 0; d < id.Count; d++)
+                    {
+                        readers[i].books.Add(books.Find(x => x.Id == id[d]));
+                    }
+                }
             }
         }
 
@@ -80,7 +95,16 @@ namespace KPI_Lab
 
             for (int i = 0; i < readers.Count; i++)
             {
-                tmp.Add(readers[i].GetString());
+                string buf = "";
+                foreach (var item in readers[i].books)
+                {
+                    buf = buf + item.Id.ToString() + " ";
+                }
+
+                if(buf == " ")
+                    tmp.Add(readers[i].GetString() + " " + 0);
+                else
+                    tmp.Add(readers[i].GetString() + " " + readers[i].books.Count + " " + buf);
             }
 
             File.AppendAllLines(path, tmp);

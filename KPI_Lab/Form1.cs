@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,8 +18,6 @@ namespace KPI_Lab
         public List<Reader> readers;
         public List<Librarian> librarians;
         public List<Admin> admins;
-
-
 
         public Form1()
         {
@@ -62,7 +61,22 @@ namespace KPI_Lab
             {
                 string[] buf = tmp[i].Split(' ');
                 readers.Add(new Reader(buf[0], buf[1], buf[2], buf[3], buf[4]));
+                List<int> id = new List<int>();
+
                 readers[i].fine = Convert.ToInt32(buf[5]);
+
+                if (buf[6] != null)
+                {
+                    for (int j = 7; j < Convert.ToInt32(buf[6]) + 7; j++)
+                    {
+                        id.Add(Convert.ToInt32(buf[j]));
+                    }
+
+                    for (int d = 0; d < id.Count; d++)
+                    {
+                        readers[i].books.Add(books.Find(x => x.Id == id[d]));
+                    }
+                }
             }
         }
 
@@ -100,8 +114,8 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        Form2 newForm = new Form2(books, readers, librarians);
-                        newForm.Show();
+                        //LibrarianForm newForm = new LibrarianForm(item);
+                        //newForm.Show();
 
                     }
                 }
@@ -112,7 +126,7 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        Form2 newForm = new Form2(books, readers, librarians);
+                        LibrarianForm newForm = new LibrarianForm(item);
                         newForm.Show();
                     }
                 }
@@ -123,8 +137,8 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        Form2 newForm = new Form2(books, readers, librarians, admins);
-                        newForm.Show();
+                        //LibrarianForm newForm = new LibrarianForm(books, readers, librarians, admins);
+                        //newForm.Show();
                     }
                 }
             }

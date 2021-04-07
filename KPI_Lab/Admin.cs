@@ -10,6 +10,7 @@ namespace KPI_Lab
     {
         List<Librarian> librarians;
         List<Admin> admins;
+
         public Admin(List<Reader> readers, List<Book> books, List<Librarian> librarians, List<Admin> admins, 
             string name, string surname, string dateOfBirth, string login, string password) : 
             base(readers, books, name, surname, dateOfBirth, login, password)

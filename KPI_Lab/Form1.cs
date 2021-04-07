@@ -114,9 +114,8 @@ namespace KPI_Lab
                 {
                     if (login.Text == item.Login && password.Text == item.Password)
                     {
-                        //LibrarianForm newForm = new LibrarianForm(item);
-                        //newForm.Show();
-
+                        ReaderForm newForm = new ReaderForm(item);
+                        newForm.Show();
                     }
                 }
             }

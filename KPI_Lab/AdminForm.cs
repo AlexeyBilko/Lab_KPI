@@ -48,6 +48,15 @@ namespace KPI_Lab
             */
             status.Items.Add("admin");
             status.Items.Add("librarian");
+            status.Items.Add("reader");
+            admin.ReadAdmins("admins.txt");
+            if (admin.admins.Count != 0)
+            {
+                foreach (var item in admins)
+                {
+                    listBox3.Items.Add(item);
+                }
+            }
         }
         /*
         public void GetBooks()
@@ -125,8 +134,10 @@ namespace KPI_Lab
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedReader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
-
+            if (listBox1.SelectedItem.ToString() != null)
+            {
+                SelectedReader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
+            }
             listBox2.Items.Clear();
 
             foreach (var item in SelectedReader.books)
@@ -158,6 +169,8 @@ namespace KPI_Lab
             try
             {
                 Reader reader = new Reader(Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+                Admin a = new Admin(readers, books, librarians, admins, Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+                Librarian l = new Librarian(readers, books, Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
                 fine.Enabled = true;
 
                 Name.Text = "";
@@ -166,11 +179,26 @@ namespace KPI_Lab
                 login.Text = "";
                 fine.Text = "";
                 password.Text = "";
+                if (status.SelectedItem.ToString() == "reader")
+                {
+                    listBox1.Items.Add(reader.Name + " " + reader.Surname);
 
-                listBox1.Items.Add(reader.Name + " " + reader.Surname);
+                    admin.readers.Add(reader);
+                    admin.SaveReadersChangesInFile("readers.txt");
+                }
+                else if (status.SelectedItem.ToString() == "admin")
+                {
+                    listBox3.Items.Add(a.Name + " " + a.Surname);
 
-                admin.readers.Add(reader);
-                admin.SaveReadersChangesInFile("readers.txt");
+                    admin.AddAdmin(a);
+                }
+                else if (status.SelectedItem.ToString() == "librarian")
+                {
+                    listBox3.Items.Add(l.Name + " " + l.Surname);
+
+                    admin.AddLibrarian(l);
+                }
+
             }
             catch (Exception)
             {
@@ -277,7 +305,19 @@ namespace KPI_Lab
                     }
                 }
             }
+            else if (status.SelectedItem.ToString() == "reader")
+            {
+                foreach (var item in readers)
+                {
+                    if (login.Text == item.Login && password.Text == item.Password)
+                    {
+                        ReaderForm newForm = new ReaderForm(item);
+                        newForm.Show();
+                    }
+                }
+            }
         }
+
 
         private void textBox5_TextChanged(object sender, EventArgs e)
         {

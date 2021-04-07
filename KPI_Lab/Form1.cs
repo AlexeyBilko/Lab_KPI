@@ -17,9 +17,6 @@ namespace KPI_Lab
         public List<Reader> readers;
         public List<Librarian> librarians;
 
-
-
-
         public Form1()
         {
             InitializeComponent();

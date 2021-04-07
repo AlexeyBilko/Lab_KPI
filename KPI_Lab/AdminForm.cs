@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 
 namespace KPI_Lab
@@ -15,10 +16,15 @@ namespace KPI_Lab
     {
         Admin admin;
         Reader SelectedReader;
+        public List<Book> books;
+        public List<Reader> readers;
+        public List<Librarian> librarians;
+        public List<Admin> admins;
 
         public AdminForm()
         {
             InitializeComponent();
+
         }
 
         public AdminForm(Admin a)
@@ -34,7 +40,88 @@ namespace KPI_Lab
             label8.Text = a.Name;
             label9.Text = a.Surname;
             label10.Text = a.Login;
+            /*
+            GetBooks();
+            GetReaders();
+            GetLibrarians();
+            GetAdmins();
+            */
+            status.Items.Add("admin");
+            status.Items.Add("librarian");
         }
+        /*
+        public void GetBooks()
+        {
+            try
+            {
+                List<string> tmp = File.ReadAllLines("books.txt").ToList();
+
+                for (int i = 0; i < tmp.Count; i++)
+                {
+                    string[] buf = tmp[i].Split(' ');
+                    books.Add(new Book(buf[0], Convert.ToInt32(buf[1]), buf[2]));
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
+            }
+        }
+
+        public void GetReaders()
+        {
+            List<string> tmp = File.ReadAllLines("readers.txt").ToList();
+
+            readers.Clear();
+
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                string[] buf = tmp[i].Split(' ');
+                readers.Add(new Reader(buf[0], buf[1], buf[2], buf[3], buf[4]));
+                List<int> id = new List<int>();
+
+                readers[i].fine = Convert.ToInt32(buf[5]);
+
+                if (buf[6] != null)
+                {
+                    for (int j = 7; j < Convert.ToInt32(buf[6]) + 7; j++)
+                    {
+                        id.Add(Convert.ToInt32(buf[j]));
+                    }
+
+                    for (int d = 0; d < id.Count; d++)
+                    {
+                        readers[i].books.Add(books.Find(x => x.Id == id[d]));
+                    }
+                }
+            }
+        }
+
+        public void GetLibrarians()
+        {
+            List<string> tmp = File.ReadAllLines("librarians.txt").ToList();
+
+            librarians.Clear();
+
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                string[] buf = tmp[i].Split(' ');
+                librarians.Add(new Librarian(readers, books, buf[0], buf[1], buf[2], buf[3], buf[4]));
+            }
+        }
+
+        public void GetAdmins()
+        {
+            List<string> tmp = File.ReadAllLines("admins.txt").ToList();
+
+            admins.Clear();
+
+            for (int i = 0; i < tmp.Count; i++)
+            {
+                string[] buf = tmp[i].Split(' ');
+                admins.Add(new Admin(readers, books, librarians, admins, buf[0], buf[1], buf[2], buf[3], buf[4]));
+            }
+        }*/
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -47,38 +134,38 @@ namespace KPI_Lab
                 listBox2.Items.Add(item.Title);
             }
 
-            textBox2.Text = SelectedReader.Name;
-            textBox3.Text = SelectedReader.Surname;
-            textBox4.Text = SelectedReader.DateOfBirth;
-            textBox5.Text = SelectedReader.Login;
-            textBox6.Text = SelectedReader.fine.ToString();
-            textBox7.Text = "********";
+            Name.Text = SelectedReader.Name;
+            Surname.Text = SelectedReader.Surname;
+            DateOfBirth.Text = SelectedReader.DateOfBirth;
+            login.Text = SelectedReader.Login;
+            fine.Text = SelectedReader.fine.ToString();
+            password.Text = "********";
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            textBox2.Text = "";
-            textBox3.Text = "";
-            textBox4.Text = "";
-            textBox5.Text = "";
-            textBox6.Text = "";
-            textBox7.Text = "";
-            textBox6.Enabled = false;
+            Name.Text = "";
+            Surname.Text = "";
+            DateOfBirth.Text = "";
+            login.Text = "";
+            fine.Text = "";
+            password.Text = "";
+            fine.Enabled = false;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                Reader reader = new Reader(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox7.Text);
-                textBox6.Enabled = true;
+                Reader reader = new Reader(Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+                fine.Enabled = true;
 
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
+                Name.Text = "";
+                Surname.Text = "";
+                DateOfBirth.Text = "";
+                login.Text = "";
+                fine.Text = "";
+                password.Text = "";
 
                 listBox1.Items.Add(reader.Name + " " + reader.Surname);
 
@@ -162,6 +249,44 @@ namespace KPI_Lab
             {
                 MessageBox.Show("Error!");
             }
+        }
+
+
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (status.SelectedItem.ToString() == "librarian")
+            {
+                foreach (var item in librarians)
+                {
+                    if (login.Text == item.Login && password.Text == item.Password)
+                    {
+                        LibrarianForm newForm = new LibrarianForm(item);
+                        newForm.Show();
+                    }
+                }
+            }
+            else if (status.SelectedItem.ToString() == "admin")
+            {
+                foreach (var item in admins)
+                {
+                    if (login.Text == item.Login && password.Text == item.Password)
+                    {
+                        AdminForm newForm = new AdminForm(item);
+                        newForm.Show();
+                    }
+                }
+            }
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

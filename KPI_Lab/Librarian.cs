@@ -110,6 +110,11 @@ namespace KPI_Lab
             File.AppendAllLines(path, tmp);
         }
 
+        public string GetString()
+        {
+            return Name + " " + Surname + " " + DateOfBirth + " " + Login + " " + Password;
+        }
+
         //тоже самое для book
     }
 }

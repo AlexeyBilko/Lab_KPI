@@ -282,18 +282,25 @@ namespace KPI_Lab
                 else if(status.SelectedItem.ToString() == "admin")
                 {
                     Admin a = admin.admins.Find(x => x.Name + " " + x.Surname == listBox3.SelectedItem.ToString());
-
-                    admin.admins.Remove(a);
-                    admin.SaveAdminsChangesInFile("admins.txt");
-
-                    listBox3.Items.Clear();
-
-                    if (admin.admins.Count != 0)
+                    // фикс бага
+                    if (a.Name != label8.Text && a.Name != label9.Text)
                     {
-                        foreach (var item in admin.admins)
+                        admin.admins.Remove(a);
+                        admin.SaveAdminsChangesInFile("admins.txt");
+
+                        listBox3.Items.Clear();
+
+                        if (admin.admins.Count != 0)
                         {
-                            listBox3.Items.Add(item.Name + " " + item.Surname);
+                            foreach (var item in admin.admins)
+                            {
+                                listBox3.Items.Add(item.Name + " " + item.Surname);
+                            }
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show("You cannot delete yourself!");
                     }
                 }
             }

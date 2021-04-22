@@ -39,6 +39,8 @@ namespace KPI_Lab
         {
             try
             {
+                button3.Enabled = false;
+                
                 SelectedReader = librarian.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
 
                 listBox2.Items.Clear();
@@ -70,26 +72,34 @@ namespace KPI_Lab
             textBox6.Text = "";
             textBox7.Text = "";
             textBox6.Enabled = false;
+            button3.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                Reader reader = new Reader(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox7.Text);
-                textBox6.Enabled = true;
+                if (textBox2.Text == "" || textBox3.Text == "" || textBox4.Text == "" || textBox5.Text == "" || textBox7.Text == "")
+                {
+                    MessageBox.Show("Some field is empty");
+                }
+                else
+                {
+                    Reader reader = new Reader(textBox2.Text, textBox3.Text, textBox4.Text, textBox5.Text, textBox7.Text);
+                    textBox6.Enabled = true;
 
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    textBox6.Text = "";
+                    textBox7.Text = "";
 
-                listBox1.Items.Add(reader.Name + " " + reader.Surname);
+                    listBox1.Items.Add(reader.Name + " " + reader.Surname);
 
-                librarian.readers.Add(reader);
-                librarian.SaveReadersChangesInFile("readers.txt");
+                    librarian.readers.Add(reader);
+                    librarian.SaveReadersChangesInFile("readers.txt");
+                }
             }
             catch (Exception)
             {

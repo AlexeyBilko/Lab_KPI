@@ -65,6 +65,7 @@ namespace KPI_Lab
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             try
             {
                 if (listBox1.SelectedItem != null)
@@ -103,6 +104,7 @@ namespace KPI_Lab
 
         private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             try
             {
                 if (listBox3.SelectedItem != null)
@@ -137,6 +139,7 @@ namespace KPI_Lab
 
         private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
+            button3.Enabled = false;
             try
             {
                 if (listBox4.SelectedItem != null)
@@ -175,59 +178,67 @@ namespace KPI_Lab
             login.Text = "";
             fine.Text = "";
             password.Text = "";
+            button3.Enabled = true;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             try
             {
-                if(status.SelectedItem.ToString() == "reader")
+                if (_Name.Text == "" || Surname.Text == "" || DateOfBirth.Text == "" || login.Text == "" || password.Text == "")
                 {
-                    Reader reader = new Reader(_Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
-
-                    _Name.Text = "";
-                    Surname.Text = "";
-                    DateOfBirth.Text = "";
-                    login.Text = "";
-                    fine.Text = "";
-                    password.Text = "";
-
-                    listBox1.Items.Add(reader.Name + " " + reader.Surname);
-
-                    admin.readers.Add(reader);
-                    admin.SaveReadersChangesInFile("readers.txt");
+                    MessageBox.Show("Some field is empty");
                 }
-                else if(status.SelectedItem.ToString() == "librarian")
+                else
                 {
-                    Librarian librarian = new Librarian(admin.readers, admin.books, _Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+                    if (status.SelectedItem.ToString() == "reader")
+                    {
+                        Reader reader = new Reader(_Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
 
-                    _Name.Text = "";
-                    Surname.Text = "";
-                    DateOfBirth.Text = "";
-                    login.Text = "";
-                    fine.Text = "";
-                    password.Text = "";
+                        _Name.Text = "";
+                        Surname.Text = "";
+                        DateOfBirth.Text = "";
+                        login.Text = "";
+                        fine.Text = "";
+                        password.Text = "";
 
-                    listBox4.Items.Add(librarian.Name + " " + librarian.Surname);
+                        listBox1.Items.Add(reader.Name + " " + reader.Surname);
 
-                    admin.librarians.Add(librarian);
-                    admin.SaveLibrariansChangesInFile("librarians.txt");
-                }
-                else if(status.SelectedItem.ToString() == "admin")
-                {
-                    Admin a = new Admin(admin.readers, admin.books, admin.librarians, admin.admins, _Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+                        admin.readers.Add(reader);
+                        admin.SaveReadersChangesInFile("readers.txt");
+                    }
+                    else if (status.SelectedItem.ToString() == "librarian")
+                    {
+                        Librarian librarian = new Librarian(admin.readers, admin.books, _Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
 
-                    _Name.Text = "";
-                    Surname.Text = "";
-                    DateOfBirth.Text = "";
-                    login.Text = "";
-                    fine.Text = "";
-                    password.Text = "";
+                        _Name.Text = "";
+                        Surname.Text = "";
+                        DateOfBirth.Text = "";
+                        login.Text = "";
+                        fine.Text = "";
+                        password.Text = "";
 
-                    listBox3.Items.Add(a.Name + " " + a.Surname);
+                        listBox4.Items.Add(librarian.Name + " " + librarian.Surname);
 
-                    admin.admins.Add(a);
-                    admin.SaveAdminsChangesInFile("admins.txt");
+                        admin.librarians.Add(librarian);
+                        admin.SaveLibrariansChangesInFile("librarians.txt");
+                    }
+                    else if (status.SelectedItem.ToString() == "admin")
+                    {
+                        Admin a = new Admin(admin.readers, admin.books, admin.librarians, admin.admins, _Name.Text, Surname.Text, DateOfBirth.Text, login.Text, password.Text);
+
+                        _Name.Text = "";
+                        Surname.Text = "";
+                        DateOfBirth.Text = "";
+                        login.Text = "";
+                        fine.Text = "";
+                        password.Text = "";
+
+                        listBox3.Items.Add(a.Name + " " + a.Surname);
+
+                        admin.admins.Add(a);
+                        admin.SaveAdminsChangesInFile("admins.txt");
+                    }
                 }
             }
             catch (Exception)

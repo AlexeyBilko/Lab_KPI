@@ -12,7 +12,6 @@ namespace KPI_Lab
 {
     public partial class ReaderForm : Form
     {
-        string selected;
         Reader reader;
         public ReaderForm()
         {
@@ -38,15 +37,10 @@ namespace KPI_Lab
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Book book = reader.books.Find(x => x.Title + "\t" + x.Title + "\t" + x.DateOfIsuue == selected);
+            Book book = reader.books.Find(x => x.Title + "\t" + x.Title + "\t" + x.DateOfIsuue == listBox1.SelectedItem.ToString());
             reader.books.Remove(book);
             listBox1.Items.Remove(listBox1.SelectedItem);
 
-        }
-
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            selected = listBox1.SelectedItem.ToString();
         }
     }
 }

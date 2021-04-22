@@ -38,7 +38,7 @@ namespace KPI_Lab
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.Items.Remove(listBox1.SelectedItem);
-            Book book = reader.books.Find(x => x.Title == listBox2.SelectedItem.ToString());
+            Book book = reader.books.Find(x => x.Title == listBox1.SelectedItem.ToString());
             reader.books.Remove(book);
         }
     }

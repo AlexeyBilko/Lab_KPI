@@ -108,6 +108,7 @@ namespace KPI_Lab
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool ifCorrect = false;
             if (comboBox1.SelectedItem.ToString() == "reader")
             {
                 foreach (var item in readers)
@@ -116,6 +117,7 @@ namespace KPI_Lab
                     {
                         ReaderForm newForm = new ReaderForm(item);
                         newForm.Show();
+                        ifCorrect = true;
                     }
                 }
             }
@@ -127,6 +129,7 @@ namespace KPI_Lab
                     {
                         LibrarianForm newForm = new LibrarianForm(item);
                         newForm.Show();
+                        ifCorrect = true;
                     }
                 }
             }
@@ -138,8 +141,14 @@ namespace KPI_Lab
                     {
                         AdminForm newForm = new AdminForm(item);
                         newForm.Show();
+                        ifCorrect = true;
                     }
                 }
+            }
+            else MessageBox.Show("Incorrect data!");
+            if(ifCorrect == false)
+            {
+                MessageBox.Show("Incorrect data!");
             }
         }
     }

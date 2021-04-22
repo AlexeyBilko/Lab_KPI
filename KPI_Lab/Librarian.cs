@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace KPI_Lab
 {
@@ -89,31 +90,38 @@ namespace KPI_Lab
 
         public void SaveReadersChangesInFile(string path)
         {
-            File.WriteAllText(path, "");
-
-            List<string> tmp = new List<string>();
-
-            for (int i = 0; i < readers.Count; i++)
+            try
             {
-                string buf = "";
-                foreach (var item in readers[i].books)
+                File.WriteAllText(path, "");
+
+                List<string> tmp = new List<string>();
+
+                for (int i = 0; i < readers.Count; i++)
                 {
-                    buf = buf + item.Id.ToString() + " ";
+                    string buf = "";
+                    foreach (var item in readers[i].books)
+                    {
+                        buf = buf + item.Id.ToString() + " ";
+                    }
+
+                    if (buf == " ")
+                        tmp.Add(readers[i].GetString() + " " + 0);
+                    else
+                        tmp.Add(readers[i].GetString() + " " + readers[i].books.Count + " " + buf);
                 }
 
-                if(buf == " ")
-                    tmp.Add(readers[i].GetString() + " " + 0);
-                else
-                    tmp.Add(readers[i].GetString() + " " + readers[i].books.Count + " " + buf);
+                File.AppendAllLines(path, tmp);
             }
-
-            File.AppendAllLines(path, tmp);
+            catch {
+                MessageBox.Show("This book doesn't exist");
+            }
         }
 
-        public string GetString()
-        {
-            return Name + " " + Surname + " " + DateOfBirth + " " + Login + " " + Password;
-        }
+            public string GetString()
+            {
+                return Name + " " + Surname + " " + DateOfBirth + " " + Login + " " + Password;
+            }
+            
 
         //тоже самое для book
     }

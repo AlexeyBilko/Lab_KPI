@@ -414,7 +414,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.ClientSize = new System.Drawing.Size(1089, 658);
+            this.ClientSize = new System.Drawing.Size(1066, 658);
             this.Controls.Add(this.fine);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.button2);

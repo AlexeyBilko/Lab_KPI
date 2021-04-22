@@ -65,84 +65,105 @@ namespace KPI_Lab
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox1.SelectedItem != null)
+            try
             {
-                textBox1.Visible = true;
-                button1.Visible = true;
-                button2.Visible = true;
-
-                SelectedReader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
-
-                listBox2.Items.Clear();
-
-                foreach (var item in SelectedReader.books)
+                if (listBox1.SelectedItem != null)
                 {
-                    listBox2.Items.Add(item.Title);
+                    textBox1.Visible = true;
+                    button1.Visible = true;
+                    button2.Visible = true;
+
+                    SelectedReader = admin.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
+
+                    listBox2.Items.Clear();
+
+                    foreach (var item in SelectedReader.books)
+                    {
+                        listBox2.Items.Add(item.Title);
+                    }
+
+                    _Name.Text = SelectedReader.Name;
+                    Surname.Text = SelectedReader.Surname;
+                    DateOfBirth.Text = SelectedReader.DateOfBirth;
+                    login.Text = SelectedReader.Login;
+                    fine.Text = SelectedReader.fine.ToString();
+                    password.Text = "********";
+
+                    status.SelectedItem = "reader";
+
+                    listBox3.ClearSelected();
+                    listBox4.ClearSelected();
                 }
-
-                _Name.Text = SelectedReader.Name;
-                Surname.Text = SelectedReader.Surname;
-                DateOfBirth.Text = SelectedReader.DateOfBirth;
-                login.Text = SelectedReader.Login;
-                fine.Text = SelectedReader.fine.ToString();
-                password.Text = "********";
-
-                status.SelectedItem = "reader";
-
-                listBox3.ClearSelected();
-                listBox4.ClearSelected();
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
             }
         }
 
         private void listBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox3.SelectedItem != null)
+            try
             {
-                textBox1.Visible = false;
-                button1.Visible = false;
-                button2.Visible = false;
+                if (listBox3.SelectedItem != null)
+                {
+                    textBox1.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
 
-                SelectedAdmin = admin.admins.Find(x => x.Name + " " + x.Surname == listBox3.SelectedItem.ToString());
+                    SelectedAdmin = admin.admins.Find(x => x.Name + " " + x.Surname == listBox3.SelectedItem.ToString());
 
-                _Name.Text = SelectedAdmin.Name;
-                Surname.Text = SelectedAdmin.Surname;
-                DateOfBirth.Text = SelectedAdmin.DateOfBirth;
-                login.Text = SelectedAdmin.Login;
-                fine.Text = "";
-                password.Text = "********";
-
-
-                status.SelectedItem = "admin";
+                    _Name.Text = SelectedAdmin.Name;
+                    Surname.Text = SelectedAdmin.Surname;
+                    DateOfBirth.Text = SelectedAdmin.DateOfBirth;
+                    login.Text = SelectedAdmin.Login;
+                    fine.Text = "";
+                    password.Text = "********";
 
 
-                listBox2.Items.Clear();
-                listBox4.ClearSelected();
-                listBox1.ClearSelected();
+                    status.SelectedItem = "admin";
+
+
+                    listBox2.Items.Clear();
+                    listBox4.ClearSelected();
+                    listBox1.ClearSelected();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
             }
         }
 
         private void listBox4_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listBox4.SelectedItem != null)
+            try
             {
-                textBox1.Visible = false;
-                button1.Visible = false;
-                button2.Visible = false;
+                if (listBox4.SelectedItem != null)
+                {
+                    textBox1.Visible = false;
+                    button1.Visible = false;
+                    button2.Visible = false;
 
-                SelectedLibrarian = admin.librarians.Find(x => x.Name + " " + x.Surname == listBox4.SelectedItem.ToString());
+                    SelectedLibrarian = admin.librarians.Find(x => x.Name + " " + x.Surname == listBox4.SelectedItem.ToString());
 
-                _Name.Text = SelectedLibrarian.Name;
-                Surname.Text = SelectedLibrarian.Surname;
-                DateOfBirth.Text = SelectedLibrarian.DateOfBirth;
-                login.Text = SelectedLibrarian.Login;
-                fine.Text = "";
-                password.Text = "********";
+                    _Name.Text = SelectedLibrarian.Name;
+                    Surname.Text = SelectedLibrarian.Surname;
+                    DateOfBirth.Text = SelectedLibrarian.DateOfBirth;
+                    login.Text = SelectedLibrarian.Login;
+                    fine.Text = "";
+                    password.Text = "********";
 
-                status.SelectedItem = "librarian";
+                    status.SelectedItem = "librarian";
 
-                listBox2.Items.Clear();
-                listBox3.ClearSelected();
-                listBox1.ClearSelected();
+                    listBox2.Items.Clear();
+                    listBox3.ClearSelected();
+                    listBox1.ClearSelected();
+                }
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
             }
         }
 

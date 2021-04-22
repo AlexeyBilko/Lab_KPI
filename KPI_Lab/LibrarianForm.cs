@@ -37,21 +37,28 @@ namespace KPI_Lab
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedReader = librarian.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
-
-            listBox2.Items.Clear();
-
-            foreach (var item in SelectedReader.books)
+            try
             {
-                listBox2.Items.Add(item.Title);
-            }
+                SelectedReader = librarian.readers.Find(x => x.Name + " " + x.Surname == listBox1.SelectedItem.ToString());
 
-            textBox2.Text = SelectedReader.Name;
-            textBox3.Text = SelectedReader.Surname;
-            textBox4.Text = SelectedReader.DateOfBirth;
-            textBox5.Text = SelectedReader.Login;
-            textBox6.Text = SelectedReader.fine.ToString();
-            textBox7.Text = "********";
+                listBox2.Items.Clear();
+
+                foreach (var item in SelectedReader.books)
+                {
+                    listBox2.Items.Add(item.Title);
+                }
+
+                textBox2.Text = SelectedReader.Name;
+                textBox3.Text = SelectedReader.Surname;
+                textBox4.Text = SelectedReader.DateOfBirth;
+                textBox5.Text = SelectedReader.Login;
+                textBox6.Text = SelectedReader.fine.ToString();
+                textBox7.Text = "********";
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Error!");
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)

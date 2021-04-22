@@ -37,10 +37,16 @@ namespace KPI_Lab
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Book book = reader.books.Find(x => x.Title + "\t" + x.Title + "\t" + x.DateOfIsuue == listBox1.SelectedItem.ToString());
-            reader.books.Remove(book);
-            listBox1.Items.Remove(listBox1.SelectedItem);
-
+            try
+            {
+                Book book = reader.books.Find(x => x.Title + "\t" + x.Title + "\t" + x.DateOfIsuue == listBox1.SelectedItem.ToString());
+                reader.books.Remove(book);
+                listBox1.Items.Remove(listBox1.SelectedItem);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("You should choose book!");
+            }
         }
     }
 }
